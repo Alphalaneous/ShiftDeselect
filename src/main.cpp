@@ -33,15 +33,13 @@ class $modify(EditorUI) {
 	}
 
 	void selectObject(GameObject* p0, bool p1) {
-		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
-		if (!kb->getShiftKeyPressed()) {
+		if (!getKeyPressed()) {
 			EditorUI::selectObject(p0, p1);
 		}
 	}
 
     void selectObjects(cocos2d::CCArray* p0, bool p1) {
-		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
-		if (!kb->getShiftKeyPressed()) {
+		if (!getKeyPressed()) {
 			EditorUI::selectObjects(p0, p1);
 		}
 		else{
@@ -53,11 +51,28 @@ class $modify(EditorUI) {
 
     void ccTouchEnded(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {
 		if(m_selectedMode == 3) {
-			auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
-			if (kb->getShiftKeyPressed()) {
+			if (getKeyPressed()) {
 				deselectSpecificObject();
 			}
 		}
 		EditorUI::ccTouchEnded(p0, p1);
+	}
+
+	bool getKeyPressed(){
+		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
+
+		std::string setting = Mod::get()->getSettingValue<std::string>("modifier-key");
+
+		if(setting == "Shift"){
+			return kb->getShiftKeyPressed();
+		}
+		if(setting == "Alt"){
+			return kb->getAltKeyPressed();
+		}
+		if(setting == "Ctrl"){
+			return kb->getControlKeyPressed();
+		}
+
+		return false;
 	}
 };
