@@ -1,3 +1,3 @@
-# ShiftDeselect
+# SingleDeselect
 
-Hold shift and click to deselect an object
+Hold a key (settings) and click to deselect an object
