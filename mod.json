@@ -1,16 +1,16 @@
 {
-	"geode": "4.0.0-alpha.1",
+	"geode": "4.0.0-beta.1",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074"
 	},
-	"version": "v1.2.2-alpha.1",
+	"version": "v1.2.2",
 	"id": "alphalaneous.shiftdeselect",
 	"name": "SingleDeselect",
 	"developer": "Alphalaneous",
 	"description": "Hold a key and click to deselect an object",
 	"links": {
-        "homepage": "https://twitter.com/alphalaneous",
+        "homepage": "https://linktr.ee/Alphalaneous",
         "source": "https://github.com/Alphalaneous/ShiftDeselect",
         "community": "https://discord.gg/Txn2CA5dHF"
     },
