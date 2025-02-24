@@ -1,10 +1,10 @@
 {
-	"geode": "4.0.1",
+	"geode": "4.2.0",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074"
 	},
-	"version": "v1.2.3",
+	"version": "v1.2.4",
 	"id": "alphalaneous.shiftdeselect",
 	"name": "SingleDeselect",
 	"developer": "Alphalaneous",
@@ -33,5 +33,8 @@
 				"Ctrl"
 			]
 		}
-	}
+	},
+	"tags": [
+		"editor"
+	]
 }
