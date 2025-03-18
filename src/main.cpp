@@ -89,8 +89,12 @@ class $modify(EditorUI) {
 	bool getKeyPressed(){
 		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
 
+		#ifdef GEODE_IS_WINDOWS
+
 		MyCCEGLView* eglView = static_cast<MyCCEGLView*>(CCEGLView::get());
 		if (eglView->isNonModifierPressed()) return false;
+
+		#endif
 
 		std::string setting = Mod::get()->getSettingValue<std::string>("modifier-key");
 
