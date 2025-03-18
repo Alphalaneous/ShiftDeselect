@@ -1,7 +1,31 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
+#include <Geode/modify/CCEGLView.hpp>
 
 using namespace geode::prelude;
+
+bool g_isNonModifierPressed = false;
+
+class $modify(MyCCEGLView, CCEGLView) {
+
+	void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+
+		if (key != GLFW_KEY_LEFT_CONTROL 
+			&& key != GLFW_KEY_RIGHT_CONTROL 
+			&& key != GLFW_KEY_LEFT_ALT 
+			&& key != GLFW_KEY_RIGHT_ALT 
+			&& key != GLFW_KEY_LEFT_SHIFT 
+			&& key != GLFW_KEY_RIGHT_SHIFT) {
+			g_isNonModifierPressed = (action == 1 || action == 2);
+		}
+
+		return CCEGLView::onGLFWKeyCallback(window, key, scancode, action, mods);
+	}
+
+	bool isNonModifierPressed() {
+		return g_isNonModifierPressed;
+	}
+};
 
 class $modify(EditorUI) {
 
@@ -60,6 +84,9 @@ class $modify(EditorUI) {
 
 	bool getKeyPressed(){
 		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
+
+		MyCCEGLView* eglView = static_cast<MyCCEGLView*>(CCEGLView::get());
+		if (eglView->isNonModifierPressed()) return false;
 
 		std::string setting = Mod::get()->getSettingValue<std::string>("modifier-key");
 
