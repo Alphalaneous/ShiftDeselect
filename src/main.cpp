@@ -6,6 +6,8 @@ using namespace geode::prelude;
 
 bool g_isNonModifierPressed = false;
 
+#ifdef GEODE_IS_WINDOWS
+
 class $modify(MyCCEGLView, CCEGLView) {
 
 	void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -26,6 +28,8 @@ class $modify(MyCCEGLView, CCEGLView) {
 		return g_isNonModifierPressed;
 	}
 };
+
+#endif
 
 class $modify(EditorUI) {
 
