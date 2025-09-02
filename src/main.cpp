@@ -6,7 +6,7 @@ using namespace geode::prelude;
 class $modify(EditorUI) {
 
 	void deselectSpecificObject() {
-		CCNode* batchLayer = m_editorLayer->m_objectsLayer;
+		CCNode* batchLayer = m_editorLayer->m_objectLayer;
 
 		CCPoint pos = getMousePos();
 		CCPoint mousePosToNode = batchLayer->convertToNodeSpace(pos);
