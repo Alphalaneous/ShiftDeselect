@@ -1,41 +1,12 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EditorUI.hpp>
-#include <Geode/modify/CCEGLView.hpp>
 
 using namespace geode::prelude;
-
-bool g_isNonModifierPressed = false;
-
-#ifdef GEODE_IS_WINDOWS
-
-class $modify(MyCCEGLView, CCEGLView) {
-
-	void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-
-		if (key != GLFW_KEY_LEFT_CONTROL 
-			&& key != GLFW_KEY_RIGHT_CONTROL 
-			&& key != GLFW_KEY_LEFT_ALT 
-			&& key != GLFW_KEY_RIGHT_ALT 
-			&& key != GLFW_KEY_LEFT_SHIFT 
-			&& key != GLFW_KEY_RIGHT_SHIFT) {
-			g_isNonModifierPressed = (action == 1 || action == 2);
-		}
-
-		return CCEGLView::onGLFWKeyCallback(window, key, scancode, action, mods);
-	}
-
-	bool isNonModifierPressed() {
-		return g_isNonModifierPressed;
-	}
-};
-
-#endif
 
 class $modify(EditorUI) {
 
 	void deselectSpecificObject() {
-		CCNode* batchLayer = m_editorLayer->getChildByIDRecursive("batch-layer");
-		if(!batchLayer) return;
+		CCNode* batchLayer = m_editorLayer->m_objectsLayer:
 
 		CCPoint pos = getMousePos();
 		CCPoint mousePosToNode = batchLayer->convertToNodeSpace(pos);
@@ -50,8 +21,6 @@ class $modify(EditorUI) {
 
 			bool isOnCurrentEditorLayer1 = obj->m_editorLayer == levelEditorLayer->m_currentLayer;
 			bool isOnCurrentEditorLayer2 = (obj->m_editorLayer2 == levelEditorLayer->m_currentLayer) && obj->m_editorLayer2 != 0;
-
-			//theoretically works, but members are wrong
 
 			if(objRect.containsPoint(mousePosToNode) && (currentLayer == -1 || (isOnCurrentEditorLayer1 || isOnCurrentEditorLayer2))) {
 				deselectObject(obj);
@@ -87,14 +56,7 @@ class $modify(EditorUI) {
 	}
 
 	bool getKeyPressed(){
-		auto kb = CCDirector::sharedDirector()->getKeyboardDispatcher();
-
-		#ifdef GEODE_IS_WINDOWS
-
-		MyCCEGLView* eglView = static_cast<MyCCEGLView*>(CCEGLView::get());
-		if (eglView->isNonModifierPressed()) return false;
-
-		#endif
+		auto kb = CCDirector::get()->getKeyboardDispatcher();
 
 		std::string setting = Mod::get()->getSettingValue<std::string>("modifier-key");
 
